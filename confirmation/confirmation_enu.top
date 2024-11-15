@@ -1,0 +1,87 @@
+topic: ~confirmation()
+language: enu
+
+concept:(greeting) ^mode(contextual)
+    ^rand[
+        "hi"
+        "hello"
+        "good morning"
+        "hey"
+    ]
+
+concept:(good) ^mode(contextual)
+    ^rand[
+        "Great"
+        "Excellent"
+        "Good"
+        "Fantastic"
+        "Wonderful"
+    ]
+
+concept:(not_good) ^mode(contextual)
+    ^rand[
+        "Not good"
+        "Not great"
+        "Terrible"
+        "Awful"
+        "Unpleasant"
+    ]
+
+concept:(yes) ^mode(contextual)
+    ^rand[
+        "Yes"
+        "Sure"
+        "Absolutely"
+        "Of course"
+        "Certainly"
+    ]
+
+concept:(no) ^mode(contextual)
+    ^rand[
+        "No"
+        "Not at all"
+        "Negative"
+        "Absolutely not"
+        "Certainly not"
+    ]
+    
+u: (e:onStart) $greetingOutput=1 ^gotoReactivate(Welcome)
+
+proposal: %Welcome "Hello! Welcome to the HR department. How can I assist you today?"
+    u1:(~greeting) ^wait(3000) ^gotoReactivate(Intro) $interviewProcess=1
+    
+proposal: %Intro "Are you here for a job interview or need help with something else?"
+    u1:(job interview) Great, let me notify the HR team. Please wait a moment. ^wait(3000) ^gotoReactivate(InterviewProcess)
+    
+    u1:(help with something else) Sure, let me know how I can assist you further.
+
+proposal: %InterviewProcess "Would you like me to guide you to the interview room or provide more information about the interview process?"
+    u1:(~yes) Sure, let me guide you to the interview room. ^wait(3000) ^gotoReactivate(Feeling)
+    
+    u1:(~no) No problem! Feel free to ask if you need anything else.
+
+proposal: %Feeling "How are you feeling today?"
+    u1:(~good) Glad to hear! Best of luck with your interview.^wait(3000) ^gotoReactivate(Room) $roomOutput=1
+    
+    u1:(~not_good) I'm sorry to hear that. I hope things get better soon! I'll try to make this process smooth for you.
+
+#
+#proposal: %Room "Let me guide you to your interview room" $movepepper=1 wait 
+  
+#u:  $arrived=1 ^gotoReactivate(prop)
+
+#proposal: welcomee have a seat, the HR will be avaiable after the interview ^goto
+    
+#    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

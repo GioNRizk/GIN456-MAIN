@@ -1,0 +1,92 @@
+topic: ~interviewProcess()
+language: enu
+
+concept:(greeting) ^mode(contextual)
+    ^rand[
+        "hi"
+        "hello"
+        "good morning"
+        "hey"
+    ]
+
+concept:(good) ^mode(contextual)
+    ^rand[
+        "Great"
+        "Excellent"
+        "Good"
+        "Fantastic"
+        "Wonderful"
+    ]
+
+concept:(not_good) ^mode(contextual)
+    ^rand[
+        "Not good"
+        "Not great"
+        "Terrible"
+        "Awful"
+        "Unpleasant"
+    ]
+
+concept:(yes) ^mode(contextual)
+    ^rand[
+        "Yes"
+        "Sure"
+        "Absolutely"
+        "Of course"
+        "Certainly"
+    ]
+
+concept:(no) ^mode(contextual)
+    ^rand[
+        "No"
+        "Not at all"
+        "Negative"
+        "Absolutely not"
+      
+    ]
+
+concept:(degree) ^mode(contextual)
+    ^rand[
+        "computer science"
+        "Computer engineering"
+        "Software engineering"     
+    ]    
+    
+concept:(noDegree) ^mode(contextual)
+    ^rand[
+        "Biomedical engineering"
+    ]
+    
+concept:(name) ^rand[gio georges charbel]
+
+concept:(mail) ^mode(contextual)
+       ^rand[
+        "giomail.com"
+        "georgemail.com"
+     ]
+
+concept:(mails) ^rand["gio mail" "joseph mail"]
+
+            
+u: (e:onStart) "Ok, let us start the interview" ^wait(500) ^gotoReactivate(mail)
+
+proposal:%mail$quizoutput1=1 $username Can you please tell me your email address?
+    u1:(~mails) Great! ^gotoReactivate(degree)
+
+proposal:%major $quizoutput2=1 Are you applying for the software engineering job?
+    u1:(~yes) You are just on time this position is still open to be filled ^gotoReactivate(degree)
+    u1:(~no) I will send a message to the HR as we are not currently hiring for another role ^gotoReactivate(endProg)
+
+proposal:%degree $quizoutput3=1 What degree are you pursuing?
+    u1:(~degree) That is great for the job ^wait(500) ^gotoReactivate(experience)
+    u1:(~noDegree) I'm sorry, but we are looking for someone with a different degree for this position. ^gotoReactivate(endProg)
+    
+proposal:%experience $quizoutput4=1 Do you have experience in this field?
+    u1:(~yes) okay ^wait(2000) now we will move to the next step of the interview and go for a small quiz. $endInterview=1
+    u1:(~no) okay ^wait(2000) now we will move to the next step of the interview and go for a small quiz. ^gotoReactivate(endProg)
+    
+proposal: %endProg The interview ended thank you for coming. $endProgram=1    
+    
+    
+    
+    
